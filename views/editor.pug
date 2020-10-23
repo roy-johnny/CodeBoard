@@ -1,0 +1,89 @@
+doctype html
+head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='')
+    title Programming Projection
+    link(rel='canonical', href='https://getbootstrap.com/docs/4.3/examples/navbar-static/')
+    // Bootstrap core CSS
+    link(href='https://getbootstrap.com/docs/4.3/dist/css/bootstrap.min.css', rel='stylesheet', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
+    link(href='https://getbootstrap.com/docs/4.3/examples/navbar-static/navbar-top.css', rel='stylesheet')
+    link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.0.8/css/all.css')
+    link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
+    link(rel='stylesheet', href='/stylesheets/editor.css')
+    link(rel='stylesheet', href='/stylesheets/home.css')
+nav.navbar.navbar-expand-md.navbar-dark.bg-dark
+    a.navbar-brand(href='/') Programming Projection
+    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarCollapse', aria-controls='navbarCollapse', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+    #navbarCollapse.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+            li.nav-item.active
+                a#sharecode.nav-link(onclick="qrcode()" href="javascript:;")="Share Code: "
+            if ifauthor
+                li.nav-item
+                    a.nav-link Do not refresh the page. Refreshing will kick all audiences out.
+            else
+                li.nav-item
+                    a#handup.nav-link(onclick="handup()" href="javascript:;") Hand Up to Submit Code
+                li.nav-item.hide#cancelhandup
+                    a.nav-link(onclick="cancelhandup()" href="javascript:;") Cancel
+        .mt-2.mt-md-0.mr-3
+            if ifauthor
+                form(action='/proj', method='post')
+                    button.btn.btn-success.my-2.my-sm-0(type='submit') Stop Projecting
+            else
+                a.btn.btn-success.my-2.my-sm-0(href='/') Quit watching
+.left
+    h3.inline Explorer
+    if ifauthor
+        span.remind.inline.ml-2 click folder name to edit/add file/folder
+    #explorer
+.right
+    span.mr-1(style="content: url(/image/font-size.png); width: 20px;")
+    input#font-size.slider.inline(type='range', min='10', max='16', step='1', value=13, oninput='changeFontSize()')
+    if ifauthor
+        .inline
+            form.form-inline.hide#fileform
+                input(name='prj_id', value=id, hidden)
+                input#file-id1(name='parent-id', hidden)
+                .form-group.mx-sm-3.mb-2
+                    input#editname.form-control.filename.remind(type="text", name="name", placeholder='File Name', required)
+                button.btn.thin-btn.inline.ml-2#fileedit
+                    i.m-icon edit
+                button.btn.thin-btn.inline.remove.ml-3#filedelete
+                    i.m-icon delete
+        .inline#stuform.hide
+            a#stuapprove.btn.btn-success.ml-3(onclick="approve()" href="javascript:;")
+            a.btn.btn-danger.ml-3(onclick="reject()" href="javascript:;") Reject
+            a.btn.btn-secondary.ml-3(onclick="cancel()" href="javascript:;") Cancel
+        .inline#stusubmit.hide
+            p.inline.ml-3#nostuinfo
+            a.btn.btn-success.inline.ml-3(onclick="cancel()" href="javascript:;") OK
+    #codeArea
+if ifauthor
+    include newfile
+else
+    include handup
+include qrcode
+script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js', integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=', crossorigin='anonymous')
+script(src='https://getbootstrap.com/docs/4.3/dist/js/bootstrap.bundle.min.js', integrity='sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o', crossorigin='anonymous')
+script(src='/js/socket.io.js')
+script(src='https://unpkg.com/codeflask/build/codeflask.min.js')
+script(src='/js/prism.js')
+script(src='/js/editor.js')
+script(src='/js/qrcode.min.js')
+style.
+    .left {
+        float: left;
+        width: 20%;
+    }
+    .right {
+        margin-left: 20%;
+    }
+    .custom-btn {
+        padding: 0 .2rem;
+    }
+    .codeflask {
+        width: 80%;
+    }

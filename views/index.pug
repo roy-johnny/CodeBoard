@@ -1,0 +1,76 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+  meta(name='description', content='')
+  title Programming Projection
+  link(rel='canonical', href='https://getbootstrap.com/docs/4.3/examples/sign-in/')
+  // Bootstrap core CSS
+  link(href='https://getbootstrap.com/docs/4.3/dist/css/bootstrap.min.css', rel='stylesheet', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
+  style.
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  // Custom styles for this template
+  link(href='https://getbootstrap.com/docs/4.3/examples/sign-in/signin.css', rel='stylesheet')
+  link(rel="stylesheet", href="/stylesheets/home.css")
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js', integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=', crossorigin='anonymous')
+  script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo', crossorigin='anonymous')
+  script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js', integrity='sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI', crossorigin='anonymous')
+  .form-signin
+    form#form-sign-in.needs-validation(action='/login', method='post', autocomplete="off")
+      if ok === 'ok'
+        .alert.alert-success(role='alert') Congratulations! You have signed up successfully!
+      else if ok === 'invalid email'
+        .alert.alert-danger(role='alert') The email address is used. Please sign up with another email.
+      else if ok === 'db error'
+        .alert.alert-danger(role='alert') Database error!
+      else if ok === 'invite error'
+        .alert.alert-danger(role='alert') Wrong invite code! The project is only for PolyU educations.
+        .alert.alert-info(role='alert')
+          | Please read the first paragraph of final report 5.Implementation section to get the correct invite code.
+      else if ok === 'wrong pass'
+        .alert.alert-danger(role='alert') Wrong email or password!
+      else if ok === 'wrong recaptcha'
+        .alert.alert-danger(role='alert') Wrong recaptcha!
+      a.float-right.btn.btn-outline-primary(href='/signup') Sign up
+      h4.card-title.mb-4.mt-1 Sign in
+      hr
+      .form-group
+        .input-group
+          input#login-email.form-control(name='email', placeholder='Email', type='email', required)
+          .invalid-feedback Email address is required.
+      .form-group
+        .input-group
+          input#login-pass.form-control(name='pass', placeholder='Password', type='password', required)
+          .invalid-feedback Password is required.
+      .g-recaptcha(data-sitekey='YOUR_RECAPTCHA_PUBLIC_KEY', data-callback='onSubmit', data-size='invisible')
+      .form-group
+        button.btn.btn-info.btn-block.button-sign-in(type='button')  Login
+      .btm-links
+        #forgot-password
+          a(href='javascript:;') Forget password?
+      br
+      br
+      h4.card-title.mb-4.mt-1 Watch Projection
+      hr
+    form(action='/proj/share', method='post', autocomplete="off")
+      .form-group
+        .input-group
+          input.form-control(name='code_id', placeholder='Share Code:', type='text')
+      .form-group
+        button.btn.btn-primary.btn-block(type='submit')  Watch Teacher's Coding!
+
+  include lost-password
+script(src='js/index.js')
+script(src='https://www.google.com/recaptcha/api.js' async defer)

@@ -1,0 +1,129 @@
+doctype html
+head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='')
+    title Programming Projection
+    link(rel='canonical', href='https://getbootstrap.com/docs/4.3/examples/navbar-static/')
+    // Bootstrap core CSS
+    link(href='https://getbootstrap.com/docs/4.3/dist/css/bootstrap.min.css', rel='stylesheet', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
+    link(href='https://getbootstrap.com/docs/4.3/examples/navbar-static/navbar-top.css', rel='stylesheet')
+    link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.0.8/css/all.css')
+    link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
+    link(rel="stylesheet", href="/stylesheets/home.css")
+nav.navbar.navbar-expand-md.navbar-dark.bg-dark.mb-4
+    a.navbar-brand(href='/') Programming Projection
+    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarCollapse', aria-controls='navbarCollapse', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+    #navbarCollapse.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+            li.nav-item
+                a.nav-link(href='/')
+                    | Home
+            li.nav-item
+                a.nav-link(href='/prj/'+project.id)=project.name
+            each item in path
+                if item.id===folder.id
+                    li.nav-item.active
+                        a.nav-link(href='#')=item.name
+                        span.sr-only (current)
+                else
+                    li.nav-item
+                        a.nav-link(href='/prj/' + project.id + '/' + item.id)=item.name
+        .mt-2.mt-md-0
+            a.btn.btn-outline-success.my-2.my-sm-0(href='/logout') Logout
+main.container(role='main')
+    .jumbotron
+        h1=folder.name
+        table.table
+            thead
+                tr
+                    th(style="width:10%") Type
+                    th Name
+                    th Edit
+                    th Delete
+            tbody
+                each file in file_list
+                    if file.type === 'folder'
+                        tr
+                            td(style="width:10%")
+                                a(href='/prj/' + file.project + '/' + file.id)
+                                    i.fas.fa-folder
+                            td(style="width:50%")
+                                a(href='/prj/' + file.project + '/' + file.id, id=file.id)=file.name
+                                form.hide.name-form(action='/prj/'+file.project+'/'+folder.id+'/edit', method='post', id=file.id + '_form')
+                                    input(name='id', value=file.id, type='hidden')
+                                    input(name='type', value='folder', type='hidden')
+                                    input.form-control.name-input.mr-2(name='name', value=file.name)
+                                    button.btn.thin-btn(type='submit')
+                                        i.m-icon done
+                            td
+                                button.btn.thin-btn(onclick='edit("' + file.id + '")')
+                                    i.m-icon(id=file.id + '_icon') edit
+                            td
+                                form.hide.name-form(action='/prj/' + file.project + '/' + folder.id + '/delete', method='post', id=file.id + '_delform')
+                                    input(name='id', value=file.id, type='hidden')
+                                    button.btn.thin-btn(type='submit')
+                                        i.m-icon done
+                                button.btn.thin-btn(onclick='remove("' + file.id + '")')
+                                    i.m-icon(id=file.id + '_del') delete
+                each file in file_list
+                    if file.type === 'file'
+                        tr
+                            td(style="width:10%")
+                                a(href='/prj/' + file.project + '/' + file.id)
+                                    i.fas.fa-file
+                            td(style="width:50%")
+                                a(href='/prj/' + file.project + '/' + file.id, id=file.id)=file.name
+                                form.hide.name-form(action='/prj/'+file.project+'/'+folder.id+'/edit', method='post', id=file.id + '_form')
+                                    input(name='id', value=file.id, type='hidden')
+                                    input(name='type', value='file', type='hidden')
+                                    input.form-control.name-input.mr-2(name='name', value=file.name)
+                                    button.btn.thin-btn(type='submit')
+                                        i.m-icon done
+                            td
+                                button.btn.thin-btn(onclick='edit("' + file.id + '")')
+                                    i.m-icon(id=file.id + '_icon') edit
+                            td
+                                form.hide.name-form(action='/prj/' + file.project + '/' + folder.id + '/delete', method='post', id=file.id + '_delform')
+                                    input(name='id', value=file.id, type='hidden')
+                                    button.btn.thin-btn(type='submit')
+                                        i.m-icon done
+                                button.btn.thin-btn(onclick='remove("' + file.id + '")')
+                                    i.m-icon(id=file.id + '_del') delete
+        button.btn.btn-lg.btn-primary#newfile New File/Folder
+        form#newfileform(action='/prj/'+project.id+'/'+folder.id+'/new', method='post', autocomplete="off" style="display: none;")
+            span="Create a new "
+            select#type(name='type')
+                option(value='file' selected) File
+                option(value='folder') Folder
+            br
+            br
+            input.form-control#inputname(type='text', name='name', placeholder='File Name')
+            br
+            .form-group
+                button.btn.btn-primary(type='submit') Create
+                a.btn.btn-light.ml-3#cancel1 Cancel
+        br
+        br
+        button.btn.btn-lg.btn-info.mt-3#newfolder Upload Folder
+        .form-group.mt-3#upload-folder(style="display: none;")
+            .alert.alert-info Please note this uploading system is different from Github. Since the webkitdirectory doesn't support file uploading, th
+                | e root folder will be abandoned after uploading. For example, if you upload a file whose path is /root/a/file.txt
+                | to the root directory of project /prj. After uploading, the path of the file in the project will be /prj/a/file.txt, instead
+                | of /prj/root/a/file/txt. This design is to make you can upload files to the root directory of the project. Meanwhile,
+                | if there is a file has same name with the uploaded file, it will be directly overwritten by the uploaded file without notification.
+            input#input-file.form-control-file.border.mb-3(type='file', webkitdirectory)
+            .form-group
+                button#upload-btn.btn.btn-primary(type='button') upload
+                a.btn.btn-light.ml-3#cancel2 Cancel
+        p#uploading
+        .progress
+            .progress-bar.progress-bar-striped.progress-bar-animated#progress-bar(role='progressbar', style='width: 0%; display: none;')
+        .alert.alert-danger.mt-3#record(role='alert' style='display:none;')
+
+script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js', integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=', crossorigin='anonymous')
+script(src='https://getbootstrap.com/docs/4.3/dist/js/bootstrap.bundle.min.js', integrity='sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o', crossorigin='anonymous')
+script(src='/js/project.js')
+script(src='/js/edit.js')
+script(src='/js/upload.js')

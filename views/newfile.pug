@@ -1,0 +1,28 @@
+#get-credentials.modal.fade
+    .modal-dialog
+        .modal-content
+            .modal-header
+                h5.modal-title#header New file/folder
+                button.close#close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+            .modal-body
+                .alert.alert-info.hide#success-info(role='alert') Create new file successfully
+                .alert.alert-danger.hide#name-alert(role='alert') There is already a file/folder with the same name in this location
+                .alert.alert-info.hide#success-edit(role='alert') Rename folder successfully
+                form#get-credentials-form
+                    input(name='prj_id', value=id, hidden)
+                    input#parent-id(name='parent-id', hidden)
+                    .form-group#create-a-new
+                        span="Create a new "
+                        select#type(name='type')
+                            option(value='file' selected) File
+                            option(value='folder') Folder
+                        span#parent-name
+                    .form-group
+                        input#filename.form-control(type="text", name="name", placeholder='File Name', required)
+                        .alert.alert-danger.d-none
+            .modal-footer
+                button(data-dismiss="modal")#delete.btn.btn-danger Delete
+                button#edit.btn.btn-info Edit
+                button(data-dismiss="modal")#cancel.btn.btn-secondary Cancel
+                button(type="submit")#request-submit.btn.btn-primary Submit

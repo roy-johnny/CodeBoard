@@ -1,0 +1,49 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+  meta(name='description', content='')
+  title Programming Projection
+  link(rel='canonical', href='https://getbootstrap.com/docs/4.3/examples/sign-in/')
+  // Bootstrap core CSS
+  link(href='https://getbootstrap.com/docs/4.3/dist/css/bootstrap.min.css', rel='stylesheet', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js', integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=', crossorigin='anonymous')
+  style.
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  // Custom styles for this template
+  link(href='https://getbootstrap.com/docs/4.3/examples/sign-in/signin.css', rel='stylesheet')
+form#signup-form.form-signin.needs-validation(action='/signup', method='post', autocomplete="off")
+  h4.card-title.mb-4.mt-1 Sign Up
+  hr
+  //p.text-success.text-center Some message goes here
+  .form-group
+    .input-group
+      input#email.form-control(name='email', placeholder='Email', type='email', required)
+      .invalid-feedback Email address is required.
+  .form-group
+    .input-group
+      input#pass.form-control(name='pass', placeholder='Password', type='password', required)
+      .invalid-feedback Password is required.
+  .form-group
+    .input-group
+      input#code.form-control(name='invite', placeholder='Invite Code', type='password', required)
+      .invalid-feedback Invite code is required.
+  .g-recaptcha(data-sitekey='YOUR_RECAPTCHA_PUBLIC_KEY', data-callback='onSubmit', data-size='invisible')
+  .form-group
+    button.btn.btn-primary.btn-block.button-sign-in(type='button') Sign Up
+  br
+  a.btn.btn-light.btn-block(href='/') Sign in
+script(src='js/signup.js')
+script(src='https://www.google.com/recaptcha/api.js' async defer)

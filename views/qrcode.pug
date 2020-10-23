@@ -1,0 +1,13 @@
+#qrcodeboard.modal.fade
+    .modal-dialog
+        .modal-content
+            .modal-header
+                h2#sharecode2.modal-title
+                button.close#close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+            .modal-body
+                div(style="float: left; width: 60%;")
+                    #qrcode
+                .right
+                    h5 If you are using a mobile device, please set to horizontal screen.
+                    img(src='/image/horizontal.png' width='150px')

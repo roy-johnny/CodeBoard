@@ -1,0 +1,12 @@
+#handupform.modal.fade
+    .modal-dialog
+        .modal-content
+            .modal-header
+                h5.modal-title Write your code here to submit
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+            .modal-body
+                .form-group
+                    textarea#handupcontent.form-control(rows='20')
+            .modal-footer
+                button(onclick="stutempsubmit()" data-dismiss="modal")#handup-submit.btn.btn-primary Submit

@@ -1,0 +1,73 @@
+doctype html
+head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='')
+    title Programming Projection
+    link(rel='canonical', href='https://getbootstrap.com/docs/4.3/examples/navbar-static/')
+    // Bootstrap core CSS
+    link(href='https://getbootstrap.com/docs/4.3/dist/css/bootstrap.min.css', rel='stylesheet', integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T', crossorigin='anonymous')
+    link(href='https://getbootstrap.com/docs/4.3/examples/navbar-static/navbar-top.css', rel='stylesheet')
+    link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
+    link(rel="stylesheet", href="/stylesheets/home.css")
+nav.navbar.navbar-expand-md.navbar-dark.bg-dark.mb-4
+    a.navbar-brand(href='/') Programming Projection
+    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarCollapse', aria-controls='navbarCollapse', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+    #navbarCollapse.collapse.navbar-collapse
+        ul.navbar-nav.mr-auto
+            li.nav-item.active
+                a.nav-link(href='/')
+                    | Home
+                    span.sr-only (current)
+        .mt-2.mt-md-0
+            a.btn.btn-light.mr-2(href='setting') Account Setting
+            a.btn.btn-outline-success.my-2.my-sm-0(href='logout') Logout
+main.container(role='main')
+    .jumbotron
+        h1 Projects
+        table.table
+            thead
+                tr
+                    th(scope='col') Name
+                    th(scope='col') Edit
+                    th(scope='col') Delete
+            tbody
+                each project in project_list
+                    tr
+                        td
+                            a(href='/prj/'+project.id, id=project.id)=project.name
+                            form.hide.name-form(action='/edit', method='post', id=project.id + '_form')
+                                input(name='id', value=project.id, type='hidden')
+                                input.form-control.name-input.mr-2(name='name', value=project.name)
+                                button.btn.thin-btn(type='submit')
+                                    i.m-icon done
+                        td
+                            button.btn.thin-btn(onclick='edit("' + project.id + '")')
+                                i.m-icon(id=project.id + '_icon') edit
+                        td
+                            form.hide.name-form(action='/delete', method='post', id=project.id + '_delform')
+                                input(name='id', value=project.id, type='hidden')
+                                button.btn.thin-btn(type='submit')
+                                    i.m-icon done
+                            button.btn.thin-btn(onclick='remove("' + project.id + '")')
+                                i.m-icon(id=project.id + '_del') delete
+        button.btn.btn-lg.btn-primary#newprj New Project
+        form#newprjform(action='/prj/new', method='post', autocomplete="off" style="display: none;")
+            p Create New Project
+            input.form-control(type='text', name='name', placeholder='Project Name')
+            br
+            button.btn.btn-lg.btn-primary(type='submit') Create
+        br
+        br
+        br
+        form(action='/proj/share', method='post', autocomplete="off")
+            .form-group
+                .input-group
+                    input.form-control(name='code_id', placeholder='Share Code:', type='password')
+            .form-group
+                button.btn.btn-primary.btn-block(type='submit')  Watch Teacher's Coding!
+script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
+script(src='https://getbootstrap.com/docs/4.3/dist/js/bootstrap.bundle.min.js', integrity='sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o', crossorigin='anonymous')
+script(src='js/home.js')
+script(src='js/edit.js')
